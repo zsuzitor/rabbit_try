@@ -1,0 +1,7 @@
+
+BasicPublish-> 
+routingKey - это что?
+exchange -  это что?
+
+
+
