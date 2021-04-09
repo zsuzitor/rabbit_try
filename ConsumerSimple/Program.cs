@@ -11,14 +11,14 @@ namespace ConsumerSimple
         static void Main(string[] args)
         {
             //message acknowledgment - "ACK" - если консьюмер забрал сообщение но упал при обработке, можно сделать
-            //что бы это сообщение не удалялось из очереди и было "переобработано" свободным консьюмером
+            //что бы это сообщение не удалялось из очереди и было "переобработано" свободным консьюмером. см BasicAck
 
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
                 channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);//из продьюсера
-                channel.BasicQos(0, 1, false);//без этой штуки рэббит просто раскидывает по очереди(порядку)в! все сообщения и не смотрит кто там занят а кто нет. это позволяет закидывать сообщения только свободным консьюмерам, но может переполниться очередь
+                channel.BasicQos(0, 1, false);//без этой штуки рэббит просто раскидывает по очереди(порядку)! все сообщения и не смотрит кто там занят а кто нет. это позволяет закидывать сообщения только свободным консьюмерам, но может переполниться очередь
 
                 Console.WriteLine(" [*] Waiting for messages.");
 
